@@ -2,7 +2,7 @@ import { Service, PlatformAccessory, CharacteristicValue, Perms } from 'homebrid
 import { HoldType, RunningState, SystemMode } from './consts';
 
 import { SalusSQ610HomebridgePlatform } from './platform';
-import { DeviceWithProps, getKnownProperties, Props, SalusConnect } from './SalusConnect';
+import { DeviceWithProps, getKnownProperties, isEnumValue, Props, SalusConnect } from './SalusConnect';
 
 export class SalusSQ610Accessory {
   private service: Service;
@@ -85,7 +85,8 @@ export class SalusSQ610Accessory {
       this.service.getCharacteristic(this.platform.Characteristic.CurrentTemperature)
         .updateValue(parseInt(`${props.LocalTemperature_x100}`) / 100);
     }
-    if (props.RunningState) {
+
+    if (isEnumValue(RunningState, props.RunningState)) {
       const state = (() => {
         if (holdType === HoldType.StandBy) {
           return this.platform.Characteristic.CurrentHeatingCoolingState.OFF;
@@ -112,7 +113,7 @@ export class SalusSQ610Accessory {
       this.service.getCharacteristic(this.platform.Characteristic.TargetTemperature)
         .updateValue(parseInt(`${props.HeatingSetpoint_x100}`) / 100);
     }
-    if (props.SystemMode) {
+    if (isEnumValue(SystemMode, props.SystemMode)) {
       const state = (() => {
         if (holdType === HoldType.StandBy) {
           return this.platform.Characteristic.CurrentHeatingCoolingState.OFF;
