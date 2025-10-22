@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { API, Logger, PlatformAccessory, PlatformConfig } from 'homebridge';
 import { SalusSQ610HomebridgePlatform } from '../platform';
 import { PLATFORM_NAME, PLUGIN_NAME } from '../settings';
